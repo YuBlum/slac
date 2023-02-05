@@ -6,8 +6,8 @@ SLAC is designed to be a simple, intuitive and low cost linear algebra library. 
 
 ## Goals of SLAC
 
-- [ ] Vectors with N sizes.
-- [ ] Vector operations.
+- [x] Vectors with N sizes.
+- [x] Vector operations.
 - [ ] Built in vector types E.g. vector2.
 - [ ] Be easy to create new vector types E.g. vector6.
 - [ ] Matrix with N rows and M columns.
