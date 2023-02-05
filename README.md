@@ -6,17 +6,17 @@ SLAC is designed to be a simple, intuitive and low cost linear algebra library. 
 
 ## Goals of SLAC
 
-[ ] - Vectors with N sizes.
-[ ] - Vector operations.
-[ ] - Built in vector types E.g. vector2.
-[ ] - Be easy to create new vector types E.g. vector6.
-[ ] - Matrix with N rows and M columns.
-[ ] - Matrix basic operations (matrix addition and matrix subtraction).
-[ ] - Matrix complex operations E.g. multiplication, determinant, inverse.
-[ ] - Built in matrix type E.g. matrix3x3.
-[ ] - Like vectors be easy to create new matrices types E.g. matrix5x2.
-[ ] - Transformations for 2D and 3D vectors.
-[ ] - Transformations for projections and views.
+- [ ] Vectors with N sizes.
+- [ ] Vector operations.
+- [ ] Built in vector types E.g. vector2.
+- [ ] Be easy to create new vector types E.g. vector6.
+- [ ] Matrix with N rows and M columns.
+- [ ] Matrix basic operations (matrix addition and matrix subtraction).
+- [ ] Matrix complex operations E.g. multiplication, determinant, inverse.
+- [ ] Built in matrix type E.g. matrix3x3.
+- [ ] Like vectors be easy to create new matrices types E.g. matrix5x2.
+- [ ] Transformations for 2D and 3D vectors.
+- [ ] Transformations for projections and views.
 
 ## How to use
 
