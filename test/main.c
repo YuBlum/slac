@@ -1,10 +1,12 @@
 #include <stdio.h>
 #define __USING_SLAC__
 #include <slac/vector.h>
+#include <math.h>
 
 int
 main(void) {
-	vector a = vector_add(vector(2, 1, 2), vector_mul(vector(2, 3, 4), vector(2, 5, 6)));
-	printf("%.1f, %.1f\n", a[0], a[1]);
+	vector a = vector(3, 2);
+	vector b = vector(1, 4);
+	printf("%f\n", vector_dist(a, b));
 	return 0;
 }

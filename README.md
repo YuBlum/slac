@@ -1,10 +1,16 @@
 # SLAC
 
-## SLAC stands for Simple Linear Algebra for C, and as the name suggests this project is... a simple linear algebra library for C! To be more especific it uses the C11 standard.
+## About SLAC
+
+### The name
+
+SLAC stands for Simple Linear Algebra for C, and as the name suggests this project is... a simple linear algebra library for C! To be more especific it uses the C11 standard.
+
+### Who this library is for
 
 SLAC is designed to be a simple, intuitive and low cost linear algebra library. The fundamental principles of this library are simplicity and readability, so it may not perform best among other linear algebra libraries, but it's definitely not slow. So if you are looking for something simple, stylish and don't care so much about having the best possible performance, this library is for you!
 
-## Goals of SLAC
+### Goals
 
 - [x] Vectors with N sizes.
 - [x] Vector operations.
@@ -39,7 +45,7 @@ Than is just include the header files to your c file. All the header files are i
 ```
 
 ### Removing the prefix of functions
-you will probably notice that all the functions, struct, etc, are using the prefix slac, for example to make a vector you write something like:
+you will probably notice that everything(functions, structs, etc...) are using the prefix **slac**, for example to make a vector you write something like:
 ```c
 slac_vector vec = slac_vector(2);
 ```
@@ -49,7 +55,7 @@ But if you're annoyed by that and would preffer to write like this:
 vector vec = vector(2);
 ```
 
-It's totally possible all you have to do is define \_\_USING\_SLAC\_\_ **before** including the header files of slac E.g.:
+It's totally possible all you have to do is define \_\_USING\_SLAC\_\_ **before** including the header files of slac E.g.
 ```c
 #define __USING_SLAC__
 #include <slac/vectors.h>
