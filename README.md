@@ -49,7 +49,7 @@ But if you're annoyed by that and would preffer to write like this:
 vector vec = vector(2);
 ```
 
-It's totally possible all you have to do is define *__USING_SLAC__* **before** including the header files of slac E.g.:
+It's totally possible all you have to do is define \_\_USING\_SLAC\_\_ **before** including the header files of slac E.g.:
 ```c
 #define __USING_SLAC__
 #include <slac/vectors.h>
