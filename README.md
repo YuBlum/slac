@@ -8,7 +8,7 @@ SLAC stands for Simple Linear Algebra for C, and as the name suggests this proje
 
 ### Who this library is for
 
-SLAC is designed to be a simple, intuitive and low cost linear algebra library. The fundamental principles of this library are simplicity and readability, so it may not perform best among other linear algebra libraries, but it's definitely not slow. So if you are looking for something simple, stylish and don't care so much about having the best possible performance, this library is for you!
+SLAC is designed to be a simple, intuitive and low memory cost linear algebra library. The fundamental principles of this library are simplicity and readability, so it may not perform best among other linear algebra libraries, but it's definitely not slow. So if you are looking for something simple, stylish and don't care so much about having the best possible performance, this library is for you!
 
 ### Goals
 
@@ -55,7 +55,7 @@ But if you're annoyed by that and would preffer to write like this:
 vector vec = vector(2);
 ```
 
-It's totally possible all you have to do is define \_\_USING\_SLAC\_\_ **before** including the header files of slac E.g.
+It's totally possible, all you have to do is define \_\_USING\_SLAC\_\_ **before** including the header files of slac E.g.
 ```c
 #define __USING_SLAC__
 #include <slac/vectors.h>

@@ -9,7 +9,7 @@ for (int i = 0; i < vector_size(left); i++) {\
 	if (vector_size(right) < i) break;\
 	((vector)(left))[i] operator ((vector)(right))[i];\
 }\
-return (left);\
+return (left)\
 
 /*
  * Setup a stack allocated memory to the layout of a vector.
@@ -19,10 +19,21 @@ any
 slac_setup_vector_memory(unsigned char size, any vec, int init_amount, float *init_values) {
 	*((unsigned char *)vec) = size;
 	vec += sizeof(unsigned char);
+	printf("%u\n", init_amount);
 	for (unsigned char i = 1; i < init_amount; i++) {
 		((vector)vec)[i - 1] = init_values[i];
 	}
 	return vec;
+}
+
+void 
+vector_print(slac_any vec) {
+	printf("[ ");
+	for (unsigned char i = 0; i < vector_size(vec); i++) {
+		if (i > 0) printf(", ");
+		printf("%.2f", ((float *)vec)[i]);
+	}
+	printf(" ]");
 }
 
 any
