@@ -15,24 +15,30 @@ SLAC is designed to be a simple, intuitive and low memory cost linear algebra li
 - [x] Vectors with N sizes.
 - [x] Vector operations.
 - [ ] Built in vector types E.g. vector2.
-- [ ] Be easy to create new vector types E.g. vector6.
+- [ ] Be easy to create new vector types.
 - [ ] Matrix with N rows and M columns.
 - [ ] Matrix basic operations (matrix addition and matrix subtraction).
-- [ ] Matrix complex operations E.g. multiplication, determinant, inverse.
+- [ ] Matrix complex operations (multiplication, determinant, inverse).
 - [ ] Built in matrix type E.g. matrix3x3.
-- [ ] Like vectors be easy to create new matrices types E.g. matrix5x2.
+- [ ] Like vectors be easy to create new matrices types.
 - [ ] Transformations for 2D and 3D vectors.
 - [ ] Transformations for projections and views.
 
-## How to use
 
-### Installation
+## Installation
+
+### Linux
+
 Clone the repository and in the terminal enter the following command:
 ```bash
 sudo make clean install
 ```
 
-### Linking the library
+### Windows
+
+For now SLAC uses only Makefiles for the installation, but you can try compile with an external compiler E.g. Visual Studio.
+
+## Linking the library
 After the instalation you will need link SLAC to your project.
 Heres an example using GCC:
 ```bash
@@ -44,7 +50,7 @@ Than is just include the header files to your c file. All the header files are i
 #include <slac/vector.h>
 ```
 
-### Removing the prefix of functions
+## Removing the prefix
 you will probably notice that everything(functions, structs, etc...) are using the prefix **slac**, for example to make a vector you write something like:
 ```c
 slac_vector vec = slac_vector(2);
