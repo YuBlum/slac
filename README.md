@@ -38,17 +38,14 @@ sudo make clean install
 
 For now SLAC uses only Makefiles for the installation, but you can try compile with an external compiler E.g. Visual Studio.
 
-## Linking the library
+## Including the library
 After the instalation you will need link SLAC to your project.
 Heres an example using GCC:
 ```bash
 cc -o <name-of-output> <name-of-c-file>.c -lslac
 ```
 
-Than is just include the header files to your c file. All the header files are in a **slac** folder, for example to include the header file with vectors youdo:
-```c
-#include <slac/vector.h>
-```
+Than just include the header files to your c file. All the header files are in a **slac** folder, for example to include the header file with vectors you just need to `#include <slac/vector.h>`, you can also include the *slac.h* header file than all the others headers will be included.
 
 ## Removing the prefix
 you will probably notice that everything(functions, structs, etc...) are using the prefix **slac**, for example to make a vector you write something like:
@@ -61,7 +58,7 @@ But if you're annoyed by that and would preffer to write like this:
 vector vec = vector(2);
 ```
 
-It's totally possible, all you have to do is define \_\_USING\_SLAC\_\_ **before** including the header files of slac E.g.
+It's totally possible, all you have to do is define \_\_USING\_SLAC\_\_ **before** including the header files of slac:
 ```c
 #define __USING_SLAC__
 #include <slac/vectors.h>

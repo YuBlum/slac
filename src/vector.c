@@ -11,6 +11,12 @@ for (int i = 0; i < vector_size(left); i++) {\
 }\
 return (left)\
 
+#define binary_operation_scalar(left, operator, right)\
+for (int i = 0; i < vector_size(left); i++) {\
+	((vector)(left))[i] operator (right);\
+}\
+return (left)\
+
 /*
  * Setup a stack allocated memory to the layout of a vector.
  * This is just to simulate a struct initialization
@@ -19,7 +25,6 @@ any
 slac_setup_vector_memory(unsigned char size, any vec, int init_amount, float *init_values) {
 	*((unsigned char *)vec) = size;
 	vec += sizeof(unsigned char);
-	printf("%u\n", init_amount);
 	for (unsigned char i = 1; i < init_amount; i++) {
 		((vector)vec)[i - 1] = init_values[i];
 	}
@@ -37,24 +42,45 @@ vector_print(slac_any vec) {
 }
 
 any
-vector_copy_to(any dest, any src) {
+vector_set_vector(any dest, any src) {
 	binary_operation(dest, =, src);
 }
 any
-vector_add_to(any dest, any src) {
+vector_add_vector_to(any dest, any src) {
 	binary_operation(dest, +=, src);
 }
 any
-vector_sub_to(any dest, any src) {
+vector_sub_vector_to(any dest, any src) {
 	binary_operation(dest, -=, src);
 }
 any
-vector_mul_to(any dest, any src) {
+vector_mul_vector_to(any dest, any src) {
 	binary_operation(dest, *=, src);
 }
 any
-vector_div_to(any dest, any src) {
+vector_div_vector_to(any dest, any src) {
 	binary_operation(dest, /=, src);
+}
+
+any
+vector_set_scalar(any dest, scalar src) {
+	binary_operation_scalar(dest, =, src);
+}
+any
+vector_add_scalar_to(any dest, scalar src) {
+	binary_operation_scalar(dest, +=, src);
+}
+any
+vector_sub_scalar_to(any dest, scalar src) {
+	binary_operation_scalar(dest, -=, src);
+}
+any
+vector_mul_scalar_to(any dest, scalar src) {
+	binary_operation_scalar(dest, *=, src);
+}
+any
+vector_div_scalar_to(any dest, scalar src) {
+	binary_operation_scalar(dest, /=, src);
 }
 
 float
