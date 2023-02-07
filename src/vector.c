@@ -25,8 +25,11 @@ any
 slac_setup_vector_memory(unsigned char size, any vec, int init_amount, float *init_values) {
 	*((unsigned char *)vec) = size;
 	vec += sizeof(unsigned char);
-	for (unsigned char i = 1; i < init_amount; i++) {
+	for (unsigned char i = 1; i < init_amount; i++)
 		((vector)vec)[i - 1] = init_values[i];
+	if (init_amount <= 1) {
+		for (unsigned char i = 0; i < size; i++)
+			((vector)vec)[i] = 0;
 	}
 	return vec;
 }
@@ -121,4 +124,10 @@ vector_dist_squared(any vec1, any vec2) {
 float
 vector_dist(any vec1, any vec2) {
 	return sqrt(vector_dist_squared(vec1, vec2));
+}
+
+any
+vector_normalize_to(any vec) {
+	float mag = vector_mag(vec);
+	return vector_div_scalar_to(vec, mag);
 }
