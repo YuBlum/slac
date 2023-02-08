@@ -2,6 +2,8 @@
 
 SLAC stands for Simple Linear Algebra for C, and as the name suggests this project is... a simple linear algebra library for C! To be more especific it uses the C11 standard.
 
+*Note that this is just an overview, if you want something more in depth you can check the [documentation](https://yublum.github.io/slac/).*
+
 ### Who this library is for
 
 SLAC is designed to be a simple, intuitive and low memory cost linear algebra library. The fundamental principles of this library are simplicity and readability, so it may not perform best among other linear algebra libraries, but it's definitely not slow. So if you are looking for something simple, stylish and don't care so much about having the best possible performance, this library is for you!
@@ -61,6 +63,3 @@ It's totally possible, all you have to do is define \_\_USING\_SLAC\_\_ **before
 #define __USING_SLAC__
 #include <slac/vector.h>
 ```
-
-### Documentation
-If you're interested in the project and want to know more about it you can check the [documentation](https://yublum.github.io/slac/).
