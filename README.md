@@ -20,6 +20,7 @@ SLAC is designed to be a simple, intuitive and low memory cost linear algebra li
 - [ ] Transformations for 2D and 3D vectors.
 - [ ] Transformations for projections and views.
 
+
 ## Installation
 
 ### Linux
@@ -41,7 +42,7 @@ Heres an example using GCC:
 cc -o <name-of-output> <name-of-c-file>.c -lslac
 ```
 
-Than just include the header files into your c file. All the header files are in a **slac** folder, for example to include the header file with vectors you just need to `#include <slac/vector.h>`. You can also include the *slac.h* header file than all the others headers will be included.
+Than just include the header files into your c file. All the header files are in a **slac** folder, for example to include the header file with vectors you just need to `#include <slac/vector.h>`. You can also include the *slac.h* header file than all the headers will be included at once.
 
 ## Removing the prefix
 
@@ -60,3 +61,6 @@ It's totally possible, all you have to do is define \_\_USING\_SLAC\_\_ **before
 #define __USING_SLAC__
 #include <slac/vector.h>
 ```
+
+### Documentation
+If you're interested in the project and want to know more about it you can check the [documentation](https://yublum.github.io/slac/).

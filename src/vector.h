@@ -9,17 +9,17 @@ typedef union {
 	struct { float x, y; };
 	struct { float r, g; };
 	struct { float s, t; };
-} *slac_vector2;
+} *const slac_vector2;
 typedef union {
 	struct { float x, y, z; };
 	struct { float r, g, b; };
 	struct { float s, t, p; };
-} *slac_vector3;
+} *const slac_vector3;
 typedef union {
 	struct { float x, y, z, w; };
 	struct { float r, g, b, a; };
 	struct { float s, t, p, q; };
-} *slac_vector4;
+} *const slac_vector4;
 
 #define __SLAC_WRAPPER_VECTOR_TO_VECTOR__(FUNC, dest, src) (_Generic((src),\
 	float: (FUNC##_scalar_to),\
