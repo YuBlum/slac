@@ -1,7 +1,6 @@
 #include <stdio.h>
 #define __USING_SLAC__
 #include <slac/slac.h>
-#include <math.h>
 
 int
 main(void) {
@@ -11,5 +10,7 @@ main(void) {
 	v->x += 2;
 	v->w -= 2;
 	vector_printl(v);
+	printf("%d\n", vector_compare(v, vector(3, 2, 3, 2)));
+	printf("%f\n", vector_angle(vector(0, 1), vector(1, 0)));
 	return 0;
 }

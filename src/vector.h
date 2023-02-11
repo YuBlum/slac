@@ -1,25 +1,8 @@
 #ifndef SLAC_VECTOR_H_
 #define SLAC_VECTOR_H_
+#include <stddef.h>
 #include <alloca.h>
-
-typedef void *slac_any;
-typedef float scalar;
-typedef scalar *const slac_vector;
-typedef union {
-	struct { float x, y; };
-	struct { float r, g; };
-	struct { float s, t; };
-} *const slac_vector2;
-typedef union {
-	struct { float x, y, z; };
-	struct { float r, g, b; };
-	struct { float s, t, p; };
-} *const slac_vector3;
-typedef union {
-	struct { float x, y, z, w; };
-	struct { float r, g, b, a; };
-	struct { float s, t, p, q; };
-} *const slac_vector4;
+#include <slac/types.h>
 
 #define __SLAC_WRAPPER_VECTOR_TO_VECTOR__(FUNC, dest, src) (_Generic((src),\
 	float: (FUNC##_scalar_to),\
@@ -50,9 +33,9 @@ typedef union {
 	default: (FUNC ## _vector_to)\
 ))(slac_vector_copy(vec1), vec2)
 
-#define SLAC_VANUM(...) (sizeof((scalar []){ 0,##__VA_ARGS__ }) / sizeof(scalar))
+#define SLAC_VANUM(...) (sizeof((slac_scalar []){ 0,##__VA_ARGS__ }) / sizeof(slac_scalar))
 
-slac_any slac_setup_vector_memory(unsigned char size, slac_any vec, int init_amount, scalar *init_values);
+slac_any slac_setup_vector_memory(unsigned int size, slac_any vec, unsigned int init_amount, slac_scalar *init_values);
 
 /* slac_vector is a 'constructor' for vectors
  * 1. 'arg1' is using a vague name because it can be used as the size or the 
@@ -68,18 +51,18 @@ slac_any slac_setup_vector_memory(unsigned char size, slac_any vec, int init_amo
 	SLAC_VANUM(__VA_ARGS__) > 1 ?\
 		slac_setup_vector_memory(\
 			SLAC_VANUM(__VA_ARGS__),\
-			alloca(sizeof(unsigned char) + sizeof(scalar) * (SLAC_VANUM(__VA_ARGS__) % 0xff)),/* 2. */\
-			SLAC_VANUM((arg1), __VA_ARGS__) % 0xff,\
-			(scalar []){ 0, (arg1), __VA_ARGS__ }\
+			alloca(sizeof(unsigned int) + sizeof(slac_scalar) * (SLAC_VANUM(__VA_ARGS__))),/* 2. */\
+			SLAC_VANUM((arg1), __VA_ARGS__),\
+			(slac_scalar []){ 0, (arg1), __VA_ARGS__ }\
 		) \
 	:\
 		slac_setup_vector_memory(\
 			(arg1),\
-			alloca(sizeof(unsigned char) + sizeof(scalar) * ((arg1) % 0xff)),/* 2. */\
+			alloca(sizeof(unsigned int) + sizeof(slac_scalar) * (arg1)),/* 2. */\
 			0, NULL\
 		)\
 )
-#define slac_vector_size(vec) *(((unsigned char *)(vec)) - 1)
+#define slac_vector_size(vec) *(((unsigned int *)(vec)) - 1)
 
 void slac_vector_print(slac_any vec);
 #define slac_vector_printl(vec) do {\
@@ -93,11 +76,11 @@ slac_any slac_vector_sub_vector_to(slac_any dest, slac_any src);
 slac_any slac_vector_mul_vector_to(slac_any dest, slac_any src);
 slac_any slac_vector_div_vector_to(slac_any dest, slac_any src);
 
-slac_any slac_vector_set_scalar(slac_any dest, scalar src);
-slac_any slac_vector_add_scalar_to(slac_any dest, scalar src);
-slac_any slac_vector_sub_scalar_to(slac_any dest, scalar src);
-slac_any slac_vector_mul_scalar_to(slac_any dest, scalar src);
-slac_any slac_vector_div_scalar_to(slac_any dest, scalar src);
+slac_any slac_vector_set_scalar(slac_any dest, slac_scalar src);
+slac_any slac_vector_add_scalar_to(slac_any dest, slac_scalar src);
+slac_any slac_vector_sub_scalar_to(slac_any dest, slac_scalar src);
+slac_any slac_vector_mul_scalar_to(slac_any dest, slac_scalar src);
+slac_any slac_vector_div_scalar_to(slac_any dest, slac_scalar src);
 
 #define slac_vector_copy(vec) slac_vector_set_vector(slac_vector(slac_vector_size(vec)), vec)
 
@@ -121,20 +104,29 @@ slac_any slac_vector_div_scalar_to(slac_any dest, scalar src);
 #define slac_vector_mul(vec1, vec2) (__SLAC_WRAPPER_VECTOR_TO_COPY__(slac_vector_mul, vec1, vec2))
 #define slac_vector_div(vec1, vec2) (__SLAC_WRAPPER_VECTOR_TO_COPY__(slac_vector_div, vec1, vec2))
 
-scalar slac_vector_dot(slac_any vec1, slac_any vec2);
-scalar slac_vector_mag_squared(slac_any vec);
-scalar slac_vector_mag(slac_any vec);
-scalar slac_vector_dist_squared(slac_any vec1, slac_any vec2);
-scalar slac_vector_dist(slac_any vec1, slac_any vec2);
+slac_scalar slac_vector_dot(slac_any vec1, slac_any vec2);
+slac_scalar slac_vector_mag_squared(slac_any vec);
+slac_scalar slac_vector_mag(slac_any vec);
+slac_scalar slac_vector_dist_squared(slac_any vec1, slac_any vec2);
+slac_scalar slac_vector_dist(slac_any vec1, slac_any vec2);
 slac_any slac_vector_normalize_to(slac_any vec);
+slac_any slac_vector_cross_to(slac_any vec1, slac_any vec2);
+
 #define slac_vector_normalize(vec) slac_vector_normalize_to(slac_vector_copy(vec))
+#define slac_vector_cross(vec1, vec2) slac_vector_cross_to(slac_vector_copy(vec), vec2)
+
+_Bool slac_vector_compare_array(slac_any vecs[]);
+#define slac_vector_compare(...) slac_vector_compare_array((slac_any []){ __VA_ARGS__, NULL })
+
+_Bool slac_vector_linear_dependent_array(slac_any vecs[]);
+#define slac_vector_linear_dependent(...) slac_vector_linear_dependent_array((slac_any []){ __VA_ARGS__, NULL })
+
+_Bool slac_vector_orthogonal(slac_any vec1, slac_any vec2);
+_Bool slac_vector_perpendicular(slac_any vec1, slac_any vec2);
+
+slac_scalar slac_vector_angle(slac_any vec1, slac_any vec2);
 
 #ifdef __USING_SLAC__
-#define any slac_any
-#define vector slac_vector
-#define vector2 slac_vector2
-#define vector3 slac_vector3
-#define vector4 slac_vector4
 #define setup_vector_memory slac_setup_vector_memory
 #define vector_size slac_vector_size
 #define vector_print slac_vector_print
@@ -169,7 +161,16 @@ slac_any slac_vector_normalize_to(slac_any vec);
 #define vector_dist_squared slac_vector_dist_squared
 #define vector_dist slac_vector_dist
 #define vector_normalize_to slac_vector_normalize_to
+#define vector_cross_to slac_vector_cross_to
 #define vector_normalize slac_vector_normalize
+#define vector_cross slac_vector_cross
+#define vector_linear_dependent_array slac_vector_linear_dependent_array
+#define vector_linear_dependent slac_vector_linear_dependent
+#define vector_compare_array slac_vector_compare_array
+#define vector_compare slac_vector_compare
+#define vector_orthogonal slac_vector_orthogonal
+#define vector_perpendicular slac_vector_perpendicular
+#define vector_angle slac_vector_angle
 #endif/*__USING_SLAC__*/
 
 #endif/*SLAC_VECTOR_H_*/
