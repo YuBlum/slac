@@ -37,7 +37,7 @@ vector_print(slac_any vec) {
 	printf("[ ");
 	for (unsigned int i = 0; i < vector_size(vec); i++) {
 		if (i > 0) printf(", ");
-		printf("%.2f", ((scalar *)vec)[i]);
+		printf("%.2f", ((vector)vec)[i]);
 	}
 	printf(" ]");
 }
@@ -81,7 +81,8 @@ vector_mul_scalar_to(any dest, scalar src) {
 }
 any
 vector_div_scalar_to(any dest, scalar src) {
-	binary_operation_scalar(dest, /=, src);
+	scalar inv_src = 1 / src;
+	binary_operation_scalar(dest, *=, inv_src);
 }
 
 scalar
@@ -131,15 +132,18 @@ vector_normalize_to(any vec) {
 }
 
 any
-vector_cross_to(any vec1, any vec2) {
-	if (vector_size(vec1) != 3 && vector_size(vec2) != 3) return NULL;
-	scalar a = ((vector)vec1)[1]*((vector)vec2)[2] - ((vector)vec1)[2]*((vector)vec2)[1],
-				 b = ((vector)vec1)[2]*((vector)vec2)[0] - ((vector)vec1)[0]*((vector)vec2)[2],
-				 c = ((vector)vec1)[0]*((vector)vec2)[1] - ((vector)vec1)[1]*((vector)vec2)[0];
-	((vector)vec1)[0] = a;
-	((vector)vec1)[1] = b;
-	((vector)vec1)[2] = c;
-	return vec1;
+vector_cross_to(any dest, any src) {
+	if (vector_size(dest) != 3 || vector_size(src) != 3) return NULL;
+
+	scalar 
+	a=((vector)dest)[1]*((vector)src)[2]-((vector)dest)[2]*((vector)src)[1],
+	b=((vector)dest)[2]*((vector)src)[0]-((vector)dest)[0]*((vector)src)[2],
+	c=((vector)dest)[0]*((vector)src)[1]-((vector)dest)[1]*((vector)src)[0];
+
+	((vector)dest)[0] = a;
+	((vector)dest)[1] = b;
+	((vector)dest)[2] = c;
+	return dest;
 }
 
 _Bool
@@ -148,7 +152,7 @@ vector_compare_array(any vecs[]) {
 	for (unsigned int i = 1; vecs[i]; i++) {
 		if (vector_size(vecs[0]) != vector_size(vecs[i])) return 0;
 		for (unsigned int j = 0; j < vector_size(vecs[0]); j++)
-			if (((scalar *)(vecs[0]))[j] != ((scalar *)(vecs[i]))[j]) return 0;
+			if (((vector)(vecs[0]))[j] != ((vector)(vecs[i]))[j]) return 0;
 	}
 	return 1;
 }
@@ -167,15 +171,15 @@ vector_orthogonal(any vec1, any vec2) {
 
 _Bool
 vector_perpendicular(any vec1, any vec2) {
-	vector zero_vector = vector(vector_size(vec1));
-	return !vector_compare(vec1, zero_vector) && !vector_compare(vec2, zero_vector) && vector_dot(vec1, vec2) == 0;
+	return !vector_compare(vec1, vector(vector_size(vec1)))
+			&& !vector_compare(vec2, vector(vector_size(vec2)))
+			&& vector_dot(vec1, vec2) == 0;
 }
 
 scalar
 vector_angle(any vec1, any vec2) {
 	scalar angle = vector_dot(vec1, vec2);
-	angle /= vector_mag(vec1);
-	angle /= vector_mag(vec2);
+	angle /= vector_mag(vec1) * vector_mag(vec2);
 	angle = acos(angle);
 	return angle;
 }

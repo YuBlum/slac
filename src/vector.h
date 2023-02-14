@@ -1,6 +1,5 @@
 #ifndef SLAC_VECTOR_H_
 #define SLAC_VECTOR_H_
-#include <stddef.h>
 #include <alloca.h>
 #include <slac/types.h>
 
@@ -89,10 +88,10 @@ slac_any slac_vector_div_scalar_to(slac_any dest, slac_scalar src);
 #define slac_vector_mul_vector(vec1, vec2) slac_vector_mul_vector_to(slac_vector_copy(vec1), vec2)
 #define slac_vector_div_vector(vec1, vec2) slac_vector_div_vector_to(slac_vector_copy(vec1), vec2)
 
-#define slac_vector_add_scalar(vec1, vec2) slac_vector_add_scalar_to(slac_vector_copy(vec1), vec2)
-#define slac_vector_sub_scalar(vec1, vec2) slac_vector_sub_scalar_to(slac_vector_copy(vec1), vec2)
-#define slac_vector_mul_scalar(vec1, vec2) slac_vector_mul_scalar_to(slac_vector_copy(vec1), vec2)
-#define slac_vector_div_scalar(vec1, vec2) slac_vector_div_scalar_to( slac_vector_copy(vec1), vec2)
+#define slac_vector_add_scalar(vec, val) slac_vector_add_scalar_to(slac_vector_copy(vec), val)
+#define slac_vector_sub_scalar(vec, val) slac_vector_sub_scalar_to(slac_vector_copy(vec), val)
+#define slac_vector_mul_scalar(vec, val) slac_vector_mul_scalar_to(slac_vector_copy(vec), val)
+#define slac_vector_div_scalar(vec, val) slac_vector_div_scalar_to( slac_vector_copy(vec), val)
 
 #define slac_vector_set(dest, src) (__SLAC_WRAPPER_VECTOR_TO_VECTOR__(slac_vector_set, src)(dest, dest, src))
 #define slac_vector_add_to(dest, src) (__SLAC_WRAPPER_VECTOR_TO_VECTOR__(slac_vector_add, dest, src))
@@ -110,10 +109,10 @@ slac_scalar slac_vector_mag(slac_any vec);
 slac_scalar slac_vector_dist_squared(slac_any vec1, slac_any vec2);
 slac_scalar slac_vector_dist(slac_any vec1, slac_any vec2);
 slac_any slac_vector_normalize_to(slac_any vec);
-slac_any slac_vector_cross_to(slac_any vec1, slac_any vec2);
+slac_any slac_vector_cross_to(slac_any dest, slac_any src);
 
 #define slac_vector_normalize(vec) slac_vector_normalize_to(slac_vector_copy(vec))
-#define slac_vector_cross(vec1, vec2) slac_vector_cross_to(slac_vector_copy(vec), vec2)
+#define slac_vector_cross(vec1, vec2) slac_vector_cross_to(slac_vector_copy(vec1), vec2)
 
 _Bool slac_vector_compare_array(slac_any vecs[]);
 #define slac_vector_compare(...) slac_vector_compare_array((slac_any []){ __VA_ARGS__, NULL })
@@ -155,7 +154,7 @@ slac_scalar slac_vector_angle(slac_any vec1, slac_any vec2);
 #define vector_sub slac_vector_sub
 #define vector_mul slac_vector_mul
 #define vector_div slac_vector_div
-#define vector_dot slac_vector_vector_dot
+#define vector_dot slac_vector_dot
 #define vector_mag_squared slac_vector_mag_squared
 #define vector_mag slac_vector_mag
 #define vector_dist_squared slac_vector_dist_squared
