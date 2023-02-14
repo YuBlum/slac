@@ -1,0 +1,1227 @@
+<!DOCTYPE HTML>
+<html lang="en" class="sidebar-visible no-js ayu">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Functions/Macros - SLAC Library Documentation</title>
+
+
+        <!-- Custom HTML head -->
+        
+        <meta name="description" content="A simple linear algebra library for the C programming language.">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        <link rel="icon" href="favicon.svg">
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+
+    </head>
+    <body>
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "ayu" : "ayu";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('ayu')
+            html.classList.add(theme);
+            html.classList.add('js');
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="index.html">Introduction</a></li><li class="chapter-item expanded affix "><li class="part-title">User Guide</li><li class="chapter-item expanded "><a href="features.html"><strong aria-hidden="true">1.</strong> Features and Goals</a></li><li class="chapter-item expanded "><a href="installation.html"><strong aria-hidden="true">2.</strong> Installation</a></li><li class="chapter-item expanded "><a href="getting_started.html"><strong aria-hidden="true">3.</strong> Getting Started</a></li><li class="chapter-item expanded affix "><li class="part-title">API</li><li class="chapter-item expanded "><a href="vectors.html"><strong aria-hidden="true">4.</strong> Vectors</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="vector_initialization.html"><strong aria-hidden="true">4.1.</strong> Initialization</a></li><li class="chapter-item expanded "><a href="vector_types.html"><strong aria-hidden="true">4.2.</strong> Types</a></li><li class="chapter-item expanded "><a href="vector_functions_macros.html" class="active"><strong aria-hidden="true">4.3.</strong> Functions/Macros</a></li></ol></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky bordered">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">SLAC Library Documentation</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="functions-and-macros"><a class="header" href="#functions-and-macros">Functions and macros</a></h1>
+<ul>
+<li><a href="./vector_functions_macros.html#vector_size">vector_size()</a></li>
+<li><a href="./vector_functions_macros.html#vector_copy">vector_copy()</a></li>
+<li><a href="./vector_functions_macros.html#vector_print">vector_print()</a></li>
+<li>
+<ul>
+<li><a href="./vector_functions_macros.html#vector_printl">vector_printl()</a></li>
+</ul>
+</li>
+<li><a href="./vector_functions_macros.html#vector_set">vector_set()</a></li>
+<li>
+<ul>
+<li><a href="./vector_functions_macros.html#vector_set_vector">vector_set_vector()</a></li>
+</ul>
+</li>
+<li>
+<ul>
+<li><a href="./vector_functions_macros.html#vector_set_scalar">vector_set_scalar()</a></li>
+</ul>
+</li>
+<li><a href="./vector_functions_macros.html#vector_add">vector_add()</a></li>
+<li>
+<ul>
+<li><a href="./vector_functions_macros.html#vector_add_to">vector_add_to()</a></li>
+</ul>
+</li>
+<li>
+<ul>
+<li>
+<ul>
+<li><a href="./vector_functions_macros.html#vector_add_vector_to">vector_add_vector_to()</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<ul>
+<li>
+<ul>
+<li><a href="./vector_functions_macros.html#vector_add_scalar_to">vector_add_scalar_to()</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<ul>
+<li><a href="./vector_functions_macros.html#vector_add_vector">vector_add_vector()</a></li>
+</ul>
+</li>
+<li>
+<ul>
+<li><a href="./vector_functions_macros.html#vector_add_scalar">vector_add_scalar()</a></li>
+</ul>
+</li>
+<li><a href="./vector_functions_macros.html#vector_sub">vector_sub()</a></li>
+<li>
+<ul>
+<li><a href="./vector_functions_macros.html#vector_sub_to">vector_sub_to()</a></li>
+</ul>
+</li>
+<li>
+<ul>
+<li>
+<ul>
+<li><a href="./vector_functions_macros.html#vector_sub_vector_to">vector_sub_vector_to()</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<ul>
+<li>
+<ul>
+<li><a href="./vector_functions_macros.html#vector_sub_scalar_to">vector_sub_scalar_to()</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<ul>
+<li><a href="./vector_functions_macros.html#vector_sub_vector">vector_sub_vector()</a></li>
+</ul>
+</li>
+<li>
+<ul>
+<li><a href="./vector_functions_macros.html#vector_sub_scalar">vector_sub_scalar()</a></li>
+</ul>
+</li>
+<li><a href="./vector_functions_macros.html#vector_mul">vector_mul()</a></li>
+<li>
+<ul>
+<li><a href="./vector_functions_macros.html#vector_mul_to">vector_mul_to()</a></li>
+</ul>
+</li>
+<li>
+<ul>
+<li>
+<ul>
+<li><a href="./vector_functions_macros.html#vector_mul_vector_to">vector_mul_vector_to()</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<ul>
+<li>
+<ul>
+<li><a href="./vector_functions_macros.html#vector_mul_scalar_to">vector_mul_scalar_to()</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<ul>
+<li><a href="./vector_functions_macros.html#vector_mul_vector">vector_mul_vector()</a></li>
+</ul>
+</li>
+<li>
+<ul>
+<li><a href="./vector_functions_macros.html#vector_mul_scalar">vector_mul_scalar()</a></li>
+</ul>
+</li>
+<li><a href="./vector_functions_macros.html#vector_div">vector_div()</a></li>
+<li>
+<ul>
+<li><a href="./vector_functions_macros.html#vector_div_to">vector_div_to()</a></li>
+</ul>
+</li>
+<li>
+<ul>
+<li>
+<ul>
+<li><a href="./vector_functions_macros.html#vector_div_vector_to">vector_div_vector_to()</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<ul>
+<li>
+<ul>
+<li><a href="./vector_functions_macros.html#vector_div_scalar_to">vector_div_scalar_to()</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<ul>
+<li><a href="./vector_functions_macros.html#vector_div_vector">vector_div_vector()</a></li>
+</ul>
+</li>
+<li>
+<ul>
+<li><a href="./vector_functions_macros.html#vector_div_scalar">vector_div_scalar()</a></li>
+</ul>
+</li>
+<li><a href="./vector_functions_macros.html#vector_dot">vector_dot()</a></li>
+<li><a href="./vector_functions_macros.html#vector_mag">vector_mag()</a></li>
+<li>
+<ul>
+<li><a href="./vector_functions_macros.html#vector_mag_squared">vector_mag_squared()</a></li>
+</ul>
+</li>
+<li><a href="./vector_functions_macros.html#vector_dist">vector_dist()</a></li>
+<li>
+<ul>
+<li><a href="./vector_functions_macros.html#vector_dist_squared">vector_dist_squared()</a></li>
+</ul>
+</li>
+<li><a href="./vector_functions_macros.html#vector_normalize">vector_normalize()</a></li>
+<li>
+<ul>
+<li><a href="./vector_functions_macros.html#vector_normalize_to">vector_normalize_to()</a></li>
+</ul>
+</li>
+<li><a href="./vector_functions_macros.html#vector_cross">vector_cross()</a></li>
+<li>
+<ul>
+<li><a href="./vector_functions_macros.html#vector_cross_to">vector_cross_to()</a></li>
+</ul>
+</li>
+<li><a href="./vector_functions_macros.html#vector_compare">vector_compare()</a></li>
+<li>
+<ul>
+<li><a href="./vector_functions_macros.html#vector_compare_array">vector_compare_array()</a></li>
+</ul>
+</li>
+<li><a href="./vector_functions_macros.html#vector_orthogonal">vector_orthogonal()</a></li>
+<li><a href="./vector_functions_macros.html#vector_perpendicular">vector_perpendicular()</a></li>
+<li><a href="./vector_functions_macros.html#vector_angle">vector_angle()</a></li>
+</ul>
+<h2 id="vector_size"><a class="header" href="#vector_size">vector_size</a></h2>
+<p>This is a macro that returns the numbers of elements in a vector.</p>
+<h3 id="arguments"><a class="header" href="#arguments">Arguments</a></h3>
+<p><strong>vec</strong> : vector to get the number of elements.</p>
+<h3 id="returns"><a class="header" href="#returns">Returns</a></h3>
+<p>Numbers of elements of a vector as a unsigned int value.</p>
+<h3 id="usage-example"><a class="header" href="#usage-example">Usage example</a></h3>
+<pre><code class="language-c">vector v = vector(1, 2, 3, 4, 5, 6);
+printf(&quot;%u\n&quot;, vector_size(v));
+</code></pre>
+<pre><code class="language-bash">OUTPUT:
+
+6
+</code></pre>
+<h2 id="vector_copy"><a class="header" href="#vector_copy">vector_copy</a></h2>
+<p>This is a macro that copies a vector into a new vector and return it.</p>
+<h3 id="arguments-1"><a class="header" href="#arguments-1">Arguments</a></h3>
+<p><strong>vec</strong> : vector to be copied.</p>
+<h3 id="returns-1"><a class="header" href="#returns-1">Returns</a></h3>
+<p>A copy of the vector passed as an argument.</p>
+<h3 id="usage-example-1"><a class="header" href="#usage-example-1">Usage example</a></h3>
+<pre><code class="language-c">vector a = (1, 2, 3);
+vector3 b = vector_copy(a);
+b-&gt;x += 2;
+vector_printl(b);
+</code></pre>
+<pre><code class="language-bash">OUTPUT:
+
+[ 3, 2, 3 ]
+</code></pre>
+<h2 id="vector_print"><a class="header" href="#vector_print">vector_print</a></h2>
+<p>This is a helper function for printing a vector.</p>
+<h2 id="arguments-2"><a class="header" href="#arguments-2">Arguments</a></h2>
+<p><strong>vec</strong> : vector to be printed.</p>
+<h2 id="usage-example-2"><a class="header" href="#usage-example-2">Usage example</a></h2>
+<pre><code class="language-c">vector v = vector(4, 8);
+vector_print(v);
+printf(&quot; &lt;- this is a vector\n&quot;)
+</code></pre>
+<pre><code class="language-bash">OUTPUT:
+
+[ 4, 8 ] &lt;- this is a vector
+</code></pre>
+<h2 id="vector_printl"><a class="header" href="#vector_printl">vector_printl</a></h2>
+<p>This is a macro that expands from the <a href="./vector_print.html#vector_printvec">vector_print</a> function, so it prints a vector and automatically adds a new line.</p>
+<h2 id="arguments-3"><a class="header" href="#arguments-3">Arguments</a></h2>
+<p><strong>vec</strong> : vector to be printed.</p>
+<h2 id="usage-example-3"><a class="header" href="#usage-example-3">Usage example</a></h2>
+<pre><code class="language-c">vector v = vector(4, 8);
+vector_printl(v);
+printf(&quot; &lt;- this is a vector\n&quot;)
+</code></pre>
+<pre><code class="language-bash">OUTPUT:
+
+[ 4, 8 ]
+ &lt;- this is a vector
+</code></pre>
+<h2 id="vector_set_vector"><a class="header" href="#vector_set_vector">vector_set_vector</a></h2>
+<p>This is a function that copy the elements of a vector to another vector.</p>
+<h3 id="arguments-4"><a class="header" href="#arguments-4">Arguments</a></h3>
+<p><strong>dest</strong> : vector that will be set.</p>
+<p><strong>src</strong> : vector to get elements from.</p>
+<h3 id="returns-2"><a class="header" href="#returns-2">Returns</a></h3>
+<p>The destination vector.</p>
+<h3 id="usage-example-4"><a class="header" href="#usage-example-4">Usage example</a></h3>
+<pre><code class="language-c">vector a = vector(1, 2, 3);
+vector b = vector(3);
+vector_set_vector(b, a);
+vector_printl(a);
+vector_printl(b);
+</code></pre>
+<pre><code class="language-bash">OUTPUT:
+
+[ 1, 2, 3 ]
+[ 1, 2, 3 ]
+</code></pre>
+<h2 id="vector_set_scalar"><a class="header" href="#vector_set_scalar">vector_set_scalar</a></h2>
+<p>This is a functiona that set all the elements of a vector to a given scalar.</p>
+<h3 id="arguments-5"><a class="header" href="#arguments-5">Arguments</a></h3>
+<p><strong>dest</strong> : vector that will be set.</p>
+<p><strong>src</strong> : the scalar that will be copied into the <strong>dest</strong> elements.</p>
+<h3 id="returns-3"><a class="header" href="#returns-3">Returns</a></h3>
+<p>The destination vector.</p>
+<h3 id="usage-example-5"><a class="header" href="#usage-example-5">Usage example</a></h3>
+<pre><code class="language-c">vector v = vector(4);
+vector_set_scalar(v, 8);
+vector_printl(v);
+</code></pre>
+<pre><code class="language-bash">OUTPUT:
+
+[ 8, 8, 8, 8 ]
+</code></pre>
+<h2 id="vector_set"><a class="header" href="#vector_set">vector_set</a></h2>
+<p>This is a wrapper macro that will call <a href="vector_functions_macros.html#vector_set_vector">vector_set_vector</a> or <a href="vector_functions_macros.html#vector_set_scalar">vector_set_scalar</a> depending on the <strong>src</strong> argument type.</p>
+<h3 id="arguments-6"><a class="header" href="#arguments-6">Arguments</a></h3>
+<p><strong>dest</strong> : vector that will be set.</p>
+<p><strong>src</strong> : vector or scalar that will be copied into <strong>dest</strong>.</p>
+<h3 id="returns-4"><a class="header" href="#returns-4">Returns</a></h3>
+<p>The destination vector.</p>
+<h3 id="usage-example-6"><a class="header" href="#usage-example-6">Usage example</a></h3>
+<pre><code class="language-c">vector v = vector(4);
+vector_set(v, 8);
+vector_printl(v);
+vector_set(v, vector(1, 2, 3, 4));
+vector_printl(v);
+</code></pre>
+<pre><code class="language-bash">OUTPUT:
+
+[ 8, 8, 8, 8 ]
+[ 1, 2, 3, 4 ]
+</code></pre>
+<h2 id="vector_add_vector_to"><a class="header" href="#vector_add_vector_to">vector_add_vector_to</a></h2>
+<p>This is a function that adds the elements of a vector to another vector.</p>
+<h3 id="arguments-7"><a class="header" href="#arguments-7">Arguments</a></h3>
+<p><strong>dest</strong> : left hand side and the destination of the addition.</p>
+<p><strong>src</strong> : right hand side of the addition.</p>
+<h3 id="returns-5"><a class="header" href="#returns-5">Returns</a></h3>
+<p>The destination vector.</p>
+<h3 id="usage-example-7"><a class="header" href="#usage-example-7">Usage example</a></h3>
+<pre><code class="language-c">vector a = vector(1, 2);
+vector b = vector(3, 4);
+vector_add_vector_to(a, b);
+vector_printl(a);
+</code></pre>
+<pre><code class="language-bash">OUTPUT:
+
+[ 4, 6 ]
+</code></pre>
+<h2 id="vector_add_scalar_to"><a class="header" href="#vector_add_scalar_to">vector_add_scalar_to</a></h2>
+<p>This is a function that adds a scalar to all the elements of a vector.</p>
+<h3 id="arguments-8"><a class="header" href="#arguments-8">Arguments</a></h3>
+<p><strong>dest</strong> : left hand side and the destination of the addition.</p>
+<p><strong>src</strong> : right hand side of the addition.</p>
+<h3 id="returns-6"><a class="header" href="#returns-6">Returns</a></h3>
+<p>The destination vector.</p>
+<h3 id="usage-example-8"><a class="header" href="#usage-example-8">Usage example</a></h3>
+<pre><code class="language-c">vector v = vector(2, 4);
+vector_add_scalar_to(a, 1);
+vector_printl(a);
+</code></pre>
+<pre><code class="language-bash">OUTPUT:
+
+[ 3, 5 ]
+</code></pre>
+<h2 id="vector_add_to"><a class="header" href="#vector_add_to">vector_add_to</a></h2>
+<p>This is a wrapper macro that will call <a href="vector_functions_macros.html#vector_add_vector_to">vector_add_vector_to</a> or <a href="vector_functions_macros.html#vector_add_scalar_to">vector_add_scalar_to</a> depending on the <strong>src</strong> argument type.</p>
+<h3 id="arguments-9"><a class="header" href="#arguments-9">Arguments</a></h3>
+<p><strong>dest</strong> : left hand side and the destination of the addition.</p>
+<p><strong>src</strong> : right hand side of the addition.</p>
+<h3 id="returns-7"><a class="header" href="#returns-7">Returns</a></h3>
+<p>The destination vector.</p>
+<h3 id="usage-example-9"><a class="header" href="#usage-example-9">Usage example</a></h3>
+<pre><code class="language-c">vector v = vector(1, 1, 1);
+vector_printl(v);
+
+vector_add_to(v, 3);
+vector_printl(v);
+
+vector_add_to(v, vector(1, 2, 3));
+vector_printl(v);
+</code></pre>
+<pre><code class="language-bash">OUTPUT:
+
+[ 1, 1, 1 ]
+[ 4, 4, 4 ]
+[ 5, 6, 7 ]
+</code></pre>
+<h2 id="vector_add_vector"><a class="header" href="#vector_add_vector">vector_add_vector</a></h2>
+<p>This is a macro that adds the elements of a vector to another vector and returns a new vector with the result.</p>
+<h3 id="arguments-10"><a class="header" href="#arguments-10">Arguments</a></h3>
+<p><strong>vec1</strong> : left hand side of the addition.</p>
+<p><strong>vec2</strong> : right hand side of the addition.</p>
+<h3 id="returns-8"><a class="header" href="#returns-8">Returns</a></h3>
+<p>A new vector with the result of the addition between <strong>vec1</strong> and <strong>vec2</strong>.</p>
+<h3 id="usage-example-10"><a class="header" href="#usage-example-10">Usage example</a></h3>
+<pre><code class="language-c">vector a = vector(1, 2);
+vector b = vector(3, 4);
+vector c = vector_add_vector(a, b);
+
+vector_printl(a);
+vector_printl(b);
+vector_printl(c);
+</code></pre>
+<pre><code class="language-bash">OUTPUT:
+
+[ 1, 2 ]
+[ 3, 4 ]
+[ 4, 6 ]
+</code></pre>
+<h2 id="vector_add_scalar"><a class="header" href="#vector_add_scalar">vector_add_scalar</a></h2>
+<p>This is a macro that adds a scalar to all the elements of a vector and returns a new vector with the result.</p>
+<h3 id="arguments-11"><a class="header" href="#arguments-11">Arguments</a></h3>
+<p><strong>vec</strong> : left hand side of the addition.</p>
+<p><strong>val</strong> : right hand side of the addition.</p>
+<h3 id="returns-9"><a class="header" href="#returns-9">Returns</a></h3>
+<p>A new vector with the result of the addition between <strong>vec</strong> and <strong>val</strong>.</p>
+<h3 id="usage-example-11"><a class="header" href="#usage-example-11">Usage example</a></h3>
+<pre><code class="language-c">vector a = vector(2, 4);
+vector b = vector_add_scalar(a, 2);
+vector_printl(a);
+vector_printl(b);
+</code></pre>
+<pre><code class="language-bash">OUTPUT:
+
+[ 2, 4 ]
+[ 4, 6 ]
+</code></pre>
+<h2 id="vector_add"><a class="header" href="#vector_add">vector_add</a></h2>
+<p>This is a wrapper macro that will call <a href="vector_functions_macros.html#vector_add_vector">vector_add_vector</a> or <a href="vector_functions_macros.html#vector_add_scalar">vector_add_scalar</a> depending on the <strong>val</strong> argument type.</p>
+<h3 id="arguments-12"><a class="header" href="#arguments-12">Arguments</a></h3>
+<p><strong>vec</strong> : left hand side and the destination of the addition.</p>
+<p><strong>val</strong> : right hand side of the addition.</p>
+<h3 id="returns-10"><a class="header" href="#returns-10">Returns</a></h3>
+<p>A new vector with the result of the addition between <strong>vec</strong> and <strong>val</strong>.</p>
+<h3 id="usage-example-12"><a class="header" href="#usage-example-12">Usage example</a></h3>
+<pre><code class="language-c">vector a = vector(1, 1, 1);
+vector_printl(a);
+
+vector b = vector_add(a, 3);
+vector_printl(b);
+
+vector c = vector_add(a, vector(1, 2, 3));
+vector_printl(c);
+</code></pre>
+<pre><code class="language-bash">OUTPUT:
+
+[ 1, 1, 1 ]
+[ 4, 4, 4 ]
+[ 2, 3, 4 ]
+</code></pre>
+<h2 id="vector_sub_vector_to"><a class="header" href="#vector_sub_vector_to">vector_sub_vector_to</a></h2>
+<p>This is a function that subs the elements of a vector to another vector.</p>
+<h3 id="arguments-13"><a class="header" href="#arguments-13">Arguments</a></h3>
+<p><strong>dest</strong> : left hand side and the destination of the subtraction.</p>
+<p><strong>src</strong> : right hand side of the subtraction.</p>
+<h3 id="returns-11"><a class="header" href="#returns-11">Returns</a></h3>
+<p>The destination vector.</p>
+<h3 id="usage-example-13"><a class="header" href="#usage-example-13">Usage example</a></h3>
+<pre><code class="language-c">vector a = vector(3, 4);
+vector b = vector(1, 2);
+vector_sub_vector_to(a, b);
+vector_printl(a);
+</code></pre>
+<pre><code class="language-bash">OUTPUT:
+
+[ 2, 2 ]
+</code></pre>
+<h2 id="vector_sub_scalar_to"><a class="header" href="#vector_sub_scalar_to">vector_sub_scalar_to</a></h2>
+<p>This is a function that subs a scalar to all the elements of a vector.</p>
+<h3 id="arguments-14"><a class="header" href="#arguments-14">Arguments</a></h3>
+<p><strong>dest</strong> : left hand side and the destination of the subtraction.</p>
+<p><strong>src</strong> : right hand side of the subtraction.</p>
+<h3 id="returns-12"><a class="header" href="#returns-12">Returns</a></h3>
+<p>The destination vector.</p>
+<h3 id="usage-example-14"><a class="header" href="#usage-example-14">Usage example</a></h3>
+<pre><code class="language-c">vector v = vector(2, 4);
+vector_sub_scalar_to(a, 1);
+vector_printl(a);
+</code></pre>
+<pre><code class="language-bash">OUTPUT:
+
+[ 1, 3 ]
+</code></pre>
+<h2 id="vector_sub_to"><a class="header" href="#vector_sub_to">vector_sub_to</a></h2>
+<p>This is a wrapper macro that will call <a href="vector_functions_macros.html#vector_sub_vector_to">vector_sub_vector_to</a> or <a href="vector_functions_macros.html#vector_sub_scalar_to">vector_sub_scalar_to</a> depending on the <strong>src</strong> argument type.</p>
+<h3 id="arguments-15"><a class="header" href="#arguments-15">Arguments</a></h3>
+<p><strong>dest</strong> : left hand side and the destination of the subtraction.</p>
+<p><strong>src</strong> : right hand side of the subtraction.</p>
+<h3 id="returns-13"><a class="header" href="#returns-13">Returns</a></h3>
+<p>The destination vector.</p>
+<h3 id="usage-example-15"><a class="header" href="#usage-example-15">Usage example</a></h3>
+<pre><code class="language-c">vector v = vector(5, 6, 7);
+vector_printl(v);
+
+vector_sub_to(v, 3);
+vector_printl(v);
+
+vector_sub_to(v, vector(1, 2, 3));
+vector_printl(v);
+</code></pre>
+<pre><code class="language-bash">OUTPUT:
+
+[ 5, 6, 7 ]
+[ 2, 3, 4 ]
+[ 1, 1, 1 ]
+</code></pre>
+<h2 id="vector_sub_vector"><a class="header" href="#vector_sub_vector">vector_sub_vector</a></h2>
+<p>This is a macro that subs the elements of a vector to another vector and returns a new vector with the result.</p>
+<h3 id="arguments-16"><a class="header" href="#arguments-16">Arguments</a></h3>
+<p><strong>vec1</strong> : left hand side of the subtraction.</p>
+<p><strong>vec2</strong> : right hand side of the subtraction.</p>
+<h3 id="returns-14"><a class="header" href="#returns-14">Returns</a></h3>
+<p>A new vector with the result of the subtraction between <strong>vec1</strong> and <strong>vec2</strong>.</p>
+<h3 id="usage-example-16"><a class="header" href="#usage-example-16">Usage example</a></h3>
+<pre><code class="language-c">vector a = vector(3, 4);
+vector b = vector(1, 2);
+vector c = vector_sub_vector(a, b);
+
+vector_printl(a);
+vector_printl(b);
+vector_printl(c);
+</code></pre>
+<pre><code class="language-bash">OUTPUT:
+
+[ 3, 4 ]
+[ 1, 2 ]
+[ 2, 2 ]
+</code></pre>
+<h2 id="vector_sub_scalar"><a class="header" href="#vector_sub_scalar">vector_sub_scalar</a></h2>
+<p>This is a macro that subs a scalar to all the elements of a vector and returns a new vector with the result.</p>
+<h3 id="arguments-17"><a class="header" href="#arguments-17">Arguments</a></h3>
+<p><strong>vec</strong> : left hand side of the subtraction.</p>
+<p><strong>val</strong> : right hand side of the subtraction.</p>
+<h3 id="returns-15"><a class="header" href="#returns-15">Returns</a></h3>
+<p>A new vector with the result of the subtraction between <strong>vec</strong> and <strong>val</strong>.</p>
+<h3 id="usage-example-17"><a class="header" href="#usage-example-17">Usage example</a></h3>
+<pre><code class="language-c">vector a = vector(2, 4);
+vector b = vector_sub_scalar(a, 2);
+vector_printl(a);
+vector_printl(b);
+</code></pre>
+<pre><code class="language-bash">OUTPUT:
+
+[ 2, 4 ]
+[ 0, 2 ]
+</code></pre>
+<h2 id="vector_sub"><a class="header" href="#vector_sub">vector_sub</a></h2>
+<p>This is a wrapper macro that will call <a href="vector_functions_macros.html#vector_sub_vector">vector_sub_vector</a> or <a href="vector_functions_macros.html#vector_sub_scalar">vector_sub_scalar</a> depending on the <strong>val</strong> argument type.</p>
+<h3 id="arguments-18"><a class="header" href="#arguments-18">Arguments</a></h3>
+<p><strong>vec</strong> : left hand side and the destination of the subtraction.</p>
+<p><strong>val</strong> : right hand side of the subtraction.</p>
+<h3 id="returns-16"><a class="header" href="#returns-16">Returns</a></h3>
+<p>A new vector with the result of the subtraction between <strong>vec</strong> and <strong>val</strong>.</p>
+<h3 id="usage-example-18"><a class="header" href="#usage-example-18">Usage example</a></h3>
+<pre><code class="language-c">vector a = vector(4, 5, 6);
+vector_printl(a);
+
+vector b = vector_sub(a, 3);
+vector_printl(b);
+
+vector c = vector_sub(a, vector(1, 2, 3));
+vector_printl(c);
+</code></pre>
+<pre><code class="language-bash">OUTPUT:
+
+[ 4, 5, 6 ]
+[ 1, 2, 3 ]
+[ 3, 3, 3 ]
+</code></pre>
+<h2 id="vector_mul_vector_to"><a class="header" href="#vector_mul_vector_to">vector_mul_vector_to</a></h2>
+<p>This is a function that muls the elements of a vector to another vector.</p>
+<h3 id="arguments-19"><a class="header" href="#arguments-19">Arguments</a></h3>
+<p><strong>dest</strong> : left hand side and the destination of the multiplication.</p>
+<p><strong>src</strong> : right hand side of the multiplication.</p>
+<h3 id="returns-17"><a class="header" href="#returns-17">Returns</a></h3>
+<p>The destination vector.</p>
+<h3 id="usage-example-19"><a class="header" href="#usage-example-19">Usage example</a></h3>
+<pre><code class="language-c">vector a = vector(1, 2);
+vector b = vector(3, 4);
+vector_mul_vector_to(a, b);
+vector_printl(a);
+</code></pre>
+<pre><code class="language-bash">OUTPUT:
+
+[ 3, 8 ]
+</code></pre>
+<h2 id="vector_mul_scalar_to"><a class="header" href="#vector_mul_scalar_to">vector_mul_scalar_to</a></h2>
+<p>This is a function that muls a scalar to all the elements of a vector.</p>
+<h3 id="arguments-20"><a class="header" href="#arguments-20">Arguments</a></h3>
+<p><strong>dest</strong> : left hand side and the destination of the multiplication.</p>
+<p><strong>src</strong> : right hand side of the multiplication.</p>
+<h3 id="returns-18"><a class="header" href="#returns-18">Returns</a></h3>
+<p>The destination vector.</p>
+<h3 id="usage-example-20"><a class="header" href="#usage-example-20">Usage example</a></h3>
+<pre><code class="language-c">vector v = vector(2, 4);
+vector_mul_scalar_to(a, 2);
+vector_printl(a);
+</code></pre>
+<pre><code class="language-bash">OUTPUT:
+
+[ 4, 8 ]
+</code></pre>
+<h2 id="vector_mul_to"><a class="header" href="#vector_mul_to">vector_mul_to</a></h2>
+<p>This is a wrapper macro that will call <a href="vector_functions_macros.html#vector_mul_vector_to">vector_mul_vector_to</a> or <a href="vector_functions_macros.html#vector_mul_scalar_to">vector_mul_scalar_to</a> depending on the <strong>src</strong> argument type.</p>
+<h3 id="arguments-21"><a class="header" href="#arguments-21">Arguments</a></h3>
+<p><strong>dest</strong> : left hand side and the destination of the multiplication.</p>
+<p><strong>src</strong> : right hand side of the multiplication.</p>
+<h3 id="returns-19"><a class="header" href="#returns-19">Returns</a></h3>
+<p>The destination vector.</p>
+<h3 id="usage-example-21"><a class="header" href="#usage-example-21">Usage example</a></h3>
+<pre><code class="language-c">vector v = vector(1, 1, 1);
+vector_printl(v);
+
+vector_mul_to(v, 3);
+vector_printl(v);
+
+vector_mul_to(v, vector(1, 2, 3));
+vector_printl(v);
+</code></pre>
+<pre><code class="language-bash">OUTPUT:
+
+[ 1, 1, 1 ]
+[ 3, 3, 3 ]
+[ 3, 6, 9 ]
+</code></pre>
+<h2 id="vector_mul_vector"><a class="header" href="#vector_mul_vector">vector_mul_vector</a></h2>
+<p>This is a macro that muls the elements of a vector to another vector and returns a new vector with the result.</p>
+<h3 id="arguments-22"><a class="header" href="#arguments-22">Arguments</a></h3>
+<p><strong>vec1</strong> : left hand side of the multiplication.</p>
+<p><strong>vec2</strong> : right hand side of the multiplication.</p>
+<h3 id="returns-20"><a class="header" href="#returns-20">Returns</a></h3>
+<p>A new vector with the result of the multiplication between <strong>vec1</strong> and <strong>vec2</strong>.</p>
+<h3 id="usage-example-22"><a class="header" href="#usage-example-22">Usage example</a></h3>
+<pre><code class="language-c">vector a = vector(1, 2);
+vector b = vector(3, 4);
+vector c = vector_mul_vector(a, b);
+
+vector_printl(a);
+vector_printl(b);
+vector_printl(c);
+</code></pre>
+<pre><code class="language-bash">OUTPUT:
+
+[ 1, 2 ]
+[ 3, 4 ]
+[ 3, 8 ]
+</code></pre>
+<h2 id="vector_mul_scalar"><a class="header" href="#vector_mul_scalar">vector_mul_scalar</a></h2>
+<p>This is a macro that muls a scalar to all the elements of a vector and returns a new vector with the result.</p>
+<h3 id="arguments-23"><a class="header" href="#arguments-23">Arguments</a></h3>
+<p><strong>vec</strong> : left hand side of the multiplication.</p>
+<p><strong>val</strong> : right hand side of the multiplication.</p>
+<h3 id="returns-21"><a class="header" href="#returns-21">Returns</a></h3>
+<p>A new vector with the result of the multiplication between <strong>vec</strong> and <strong>val</strong>.</p>
+<h3 id="usage-example-23"><a class="header" href="#usage-example-23">Usage example</a></h3>
+<pre><code class="language-c">vector a = vector(2, 4);
+vector b = vector_mul_scalar(a, 2);
+vector_printl(a);
+vector_printl(b);
+</code></pre>
+<pre><code class="language-bash">OUTPUT:
+
+[ 2, 4 ]
+[ 4, 8 ]
+</code></pre>
+<h2 id="vector_mul"><a class="header" href="#vector_mul">vector_mul</a></h2>
+<p>This is a wrapper macro that will call <a href="vector_functions_macros.html#vector_mul_vector">vector_mul_vector</a> or <a href="vector_functions_macros.html#vector_mul_scalar">vector_mul_scalar</a> depending on the <strong>val</strong> argument type.</p>
+<h3 id="arguments-24"><a class="header" href="#arguments-24">Arguments</a></h3>
+<p><strong>vec</strong> : left hand side and the destination of the multiplication.</p>
+<p><strong>val</strong> : right hand side of the multiplication.</p>
+<h3 id="returns-22"><a class="header" href="#returns-22">Returns</a></h3>
+<p>A new vector with the result of the multiplication between <strong>vec</strong> and <strong>val</strong>.</p>
+<h3 id="usage-example-24"><a class="header" href="#usage-example-24">Usage example</a></h3>
+<pre><code class="language-c">vector a = vector(3, 3, 3);
+vector_printl(a);
+
+vector b = vector_mul(a, 3);
+vector_printl(b);
+
+vector c = vector_mul(a, vector(1, 2, 3));
+vector_printl(c);
+</code></pre>
+<pre><code class="language-bash">OUTPUT:
+
+[ 3, 3, 3 ]
+[ 9, 9, 9 ]
+[ 3, 6, 9 ]
+</code></pre>
+<h2 id="vector_div_vector_to"><a class="header" href="#vector_div_vector_to">vector_div_vector_to</a></h2>
+<p>This is a function that divs the elements of a vector to another vector.</p>
+<h3 id="arguments-25"><a class="header" href="#arguments-25">Arguments</a></h3>
+<p><strong>dest</strong> : left hand side and the destination of the division.</p>
+<p><strong>src</strong> : right hand side of the division.</p>
+<h3 id="returns-23"><a class="header" href="#returns-23">Returns</a></h3>
+<p>The destination vector.</p>
+<h3 id="usage-example-25"><a class="header" href="#usage-example-25">Usage example</a></h3>
+<pre><code class="language-c">vector a = vector(8, 9);
+vector b = vector(2, 3);
+vector_div_vector_to(a, b);
+vector_printl(a);
+</code></pre>
+<pre><code class="language-bash">OUTPUT:
+
+[ 4, 3 ]
+</code></pre>
+<h2 id="vector_div_scalar_to"><a class="header" href="#vector_div_scalar_to">vector_div_scalar_to</a></h2>
+<p>This is a function that divs a scalar to all the elements of a vector.</p>
+<h3 id="arguments-26"><a class="header" href="#arguments-26">Arguments</a></h3>
+<p><strong>dest</strong> : left hand side and the destination of the division.</p>
+<p><strong>src</strong> : right hand side of the division.</p>
+<h3 id="returns-24"><a class="header" href="#returns-24">Returns</a></h3>
+<p>The destination vector.</p>
+<h3 id="usage-example-26"><a class="header" href="#usage-example-26">Usage example</a></h3>
+<pre><code class="language-c">vector v = vector(2, 4);
+vector_div_scalar_to(a, 2);
+vector_printl(a);
+</code></pre>
+<pre><code class="language-bash">OUTPUT:
+
+[ 1, 2 ]
+</code></pre>
+<h2 id="vector_div_to"><a class="header" href="#vector_div_to">vector_div_to</a></h2>
+<p>This is a wrapper macro that will call <a href="vector_functions_macros.html#vector_div_vector_to">vector_div_vector_to</a> or <a href="vector_functions_macros.html#vector_div_scalar_to">vector_div_scalar_to</a> depending on the <strong>src</strong> argument type.</p>
+<h3 id="arguments-27"><a class="header" href="#arguments-27">Arguments</a></h3>
+<p><strong>dest</strong> : left hand side and the destination of the division.</p>
+<p><strong>src</strong> : right hand side of the division.</p>
+<h3 id="returns-25"><a class="header" href="#returns-25">Returns</a></h3>
+<p>The destination vector.</p>
+<h3 id="usage-example-27"><a class="header" href="#usage-example-27">Usage example</a></h3>
+<pre><code class="language-c">vector v = vector(12, 12, 12);
+vector_printl(v);
+
+vector_div_to(v, 2);
+vector_printl(v);
+
+vector_div_to(v, vector(1, 2, 6));
+vector_printl(v);
+</code></pre>
+<pre><code class="language-bash">OUTPUT:
+
+[ 12, 12, 12 ]
+[ 6, 6, 6 ]
+[ 6, 3, 1 ]
+</code></pre>
+<h2 id="vector_div_vector"><a class="header" href="#vector_div_vector">vector_div_vector</a></h2>
+<p>This is a macro that divs the elements of a vector to another vector and returns a new vector with the result.</p>
+<h3 id="arguments-28"><a class="header" href="#arguments-28">Arguments</a></h3>
+<p><strong>vec1</strong> : left hand side of the division.</p>
+<p><strong>vec2</strong> : right hand side of the division.</p>
+<h3 id="returns-26"><a class="header" href="#returns-26">Returns</a></h3>
+<p>A new vector with the result of the division between <strong>vec1</strong> and <strong>vec2</strong>.</p>
+<h3 id="usage-example-28"><a class="header" href="#usage-example-28">Usage example</a></h3>
+<pre><code class="language-c">vector a = vector(8, 9);
+vector b = vector(2, 3);
+vector c = vector_div_vector(a, b);
+
+vector_printl(a);
+vector_printl(b);
+vector_printl(c);
+</code></pre>
+<pre><code class="language-bash">OUTPUT:
+
+[ 8, 9 ]
+[ 2, 3 ]
+[ 4, 3 ]
+</code></pre>
+<h2 id="vector_div_scalar"><a class="header" href="#vector_div_scalar">vector_div_scalar</a></h2>
+<p>This is a macro that divs a scalar to all the elements of a vector and returns a new vector with the result.</p>
+<h3 id="arguments-29"><a class="header" href="#arguments-29">Arguments</a></h3>
+<p><strong>vec</strong> : left hand side of the division.</p>
+<p><strong>val</strong> : right hand side of the division.</p>
+<h3 id="returns-27"><a class="header" href="#returns-27">Returns</a></h3>
+<p>A new vector with the result of the division between <strong>vec</strong> and <strong>val</strong>.</p>
+<h3 id="usage-example-29"><a class="header" href="#usage-example-29">Usage example</a></h3>
+<pre><code class="language-c">vector a = vector(2, 4);
+vector b = vector_div_scalar(a, 2);
+vector_printl(a);
+vector_printl(b);
+</code></pre>
+<pre><code class="language-bash">OUTPUT:
+
+[ 2, 4 ]
+[ 1, 2 ]
+</code></pre>
+<h2 id="vector_div"><a class="header" href="#vector_div">vector_div</a></h2>
+<p>This is a wrapper macro that will call <a href="vector_functions_macros.html#vector_div_vector">vector_div_vector</a> or <a href="vector_functions_macros.html#vector_div_scalar">vector_div_scalar</a> depending on the <strong>val</strong> argument type.</p>
+<h3 id="arguments-30"><a class="header" href="#arguments-30">Arguments</a></h3>
+<p><strong>vec</strong> : left hand side and the destination of the division.</p>
+<p><strong>val</strong> : right hand side of the division.</p>
+<h3 id="returns-28"><a class="header" href="#returns-28">Returns</a></h3>
+<p>A new vector with the result of the division between <strong>vec</strong> and <strong>val</strong>.</p>
+<h3 id="usage-example-30"><a class="header" href="#usage-example-30">Usage example</a></h3>
+<pre><code class="language-c">vector a = vector(12, 12, 12);
+vector_printl(a);
+
+vector b = vector_div(a, 2);
+vector_printl(b);
+
+vector c = vector_div(a, vector(1, 2, 6));
+vector_printl(c);
+</code></pre>
+<pre><code class="language-bash">OUTPUT:
+
+[ 12, 12, 12 ]
+[ 6, 6, 6 ]
+[ 12, 6, 2 ]
+</code></pre>
+<h2 id="vector_dot"><a class="header" href="#vector_dot">vector_dot</a></h2>
+<p>This is a function to get the dot product between two vectors.</p>
+<h3 id="arguments-31"><a class="header" href="#arguments-31">Arguments</a></h3>
+<p><strong>vec1</strong> : first vector to the dot operation.</p>
+<p><strong>vec2</strong> : second vector to the dot operation.</p>
+<h3 id="returns-29"><a class="header" href="#returns-29">Returns</a></h3>
+<p>The dot product between <strong>vec1</strong> and <strong>vec2</strong> which is a scalar (a.k.a float).</p>
+<h3 id="usage-example-31"><a class="header" href="#usage-example-31">Usage example</a></h3>
+<pre><code class="language-c">vector i = vector(1, 0);
+vector j = vector(0, 1);
+
+printf(&quot;%.1f\n&quot;, vector_dot(i, j));
+</code></pre>
+<pre><code class="language-bash">OUTPUT:
+
+0.0
+</code></pre>
+<h2 id="vector_mag_squared"><a class="header" href="#vector_mag_squared">vector_mag_squared</a></h2>
+<p>This is a function to get the squared magnitude of a vector.</p>
+<p>If you ever need the magnitude squared use this function for better performance.</p>
+<h3 id="arguments-32"><a class="header" href="#arguments-32">Arguments</a></h3>
+<p><strong>vec</strong> : vector to get the magnitude.</p>
+<h3 id="returns-30"><a class="header" href="#returns-30">Returns</a></h3>
+<p>The magnitude of <strong>vec</strong> squared.</p>
+<h3 id="usage-example-32"><a class="header" href="#usage-example-32">Usage example</a></h3>
+<pre><code class="language-c">vector v = vector(3, 2);
+printf(&quot;%.2f\n&quot;, vector_mag_squared(v));
+</code></pre>
+<pre><code class="language-bash">OUTPUT:
+
+13.00
+</code></pre>
+<h2 id="vector_mag"><a class="header" href="#vector_mag">vector_mag</a></h2>
+<p>This is a function to get the magnitude of a vector.</p>
+<h3 id="arguments-33"><a class="header" href="#arguments-33">Arguments</a></h3>
+<p><strong>vec</strong> : vector to get the magnitude.</p>
+<h3 id="returns-31"><a class="header" href="#returns-31">Returns</a></h3>
+<p>The magnitude of <strong>vec</strong>.</p>
+<h3 id="usage-example-33"><a class="header" href="#usage-example-33">Usage example</a></h3>
+<pre><code class="language-c">vector v = vector(3, 2);
+printf(&quot;%.2f\n&quot;, vector_mag(v));
+</code></pre>
+<pre><code class="language-bash">OUTPUT:
+
+3.61
+</code></pre>
+<h2 id="vector_dist_squared"><a class="header" href="#vector_dist_squared">vector_dist_squared</a></h2>
+<p>This is a function to get the squared distance between two vectors.</p>
+<p>If you ever need the distance squared use this function for better performance.</p>
+<h3 id="arguments-34"><a class="header" href="#arguments-34">Arguments</a></h3>
+<p><strong>vec1</strong> : starting vector of the distance.
+<strong>vec2</strong> : ending vector of the distance.</p>
+<h3 id="returns-32"><a class="header" href="#returns-32">Returns</a></h3>
+<p>The distance between <strong>vec1</strong> and <strong>vec2</strong> squared.</p>
+<h3 id="usage-example-34"><a class="header" href="#usage-example-34">Usage example</a></h3>
+<pre><code class="language-c">vector a = vector(4.120f, 2);
+vector b = vector(6.355f, 9);
+printf(&quot;%.2f\n&quot;, vector_dist_squared(a, b));
+</code></pre>
+<pre><code class="language-bash">OUTPUT:
+
+69.00
+</code></pre>
+<h2 id="vector_dist"><a class="header" href="#vector_dist">vector_dist</a></h2>
+<p>This is a function to get the distance between two vectors.</p>
+<h3 id="arguments-35"><a class="header" href="#arguments-35">Arguments</a></h3>
+<p><strong>vec1</strong> : starting vector of the distance.
+<strong>vec2</strong> : ending vector of the distance.</p>
+<h3 id="returns-33"><a class="header" href="#returns-33">Returns</a></h3>
+<p>The distance between <strong>vec1</strong> and <strong>vec2</strong>.</p>
+<h3 id="usage-example-35"><a class="header" href="#usage-example-35">Usage example</a></h3>
+<pre><code class="language-c">vector a = vector(4.120f, 2);
+vector b = vector(6.355f, 9);
+printf(&quot;%.2f\n&quot;, vector_dist(a, b));
+</code></pre>
+<pre><code class="language-bash">OUTPUT:
+
+8.31
+</code></pre>
+<h2 id="vector_normalize_to"><a class="header" href="#vector_normalize_to">vector_normalize_to</a></h2>
+<p>This is function normalizes a vector and stores the result in the same vector.</p>
+<h3 id="arguments-36"><a class="header" href="#arguments-36">Arguments</a></h3>
+<p><strong>vec</strong> : vector to be normalized.</p>
+<h3 id="returns-34"><a class="header" href="#returns-34">Returns</a></h3>
+<p>The <strong>vec</strong> vector.</p>
+<h3 id="usage-example-36"><a class="header" href="#usage-example-36">Usage example</a></h3>
+<pre><code class="language-c">vector v = vector(8, 3);
+vector_normalize_to(v);
+vector_printl(v);
+</code></pre>
+<pre><code class="language-bash">OUTPUT:
+
+[ 0.94, 0.35 ]
+</code></pre>
+<h2 id="vector_normalize"><a class="header" href="#vector_normalize">vector_normalize</a></h2>
+<p>This is macro that normalizes a vector and stores the result in a new vector.</p>
+<h3 id="arguments-37"><a class="header" href="#arguments-37">Arguments</a></h3>
+<p><strong>vec</strong> : vector to be normalized.</p>
+<h3 id="returns-35"><a class="header" href="#returns-35">Returns</a></h3>
+<p>A new vector with the <strong>vec</strong> vector normalized.</p>
+<h3 id="usage-example-37"><a class="header" href="#usage-example-37">Usage example</a></h3>
+<pre><code class="language-c">vector a = vector(8, 3);
+vector b = vector_normalize(v);
+vector_printl(a);
+vector_printl(b);
+</code></pre>
+<pre><code class="language-bash">OUTPUT:
+
+[ 8.00, 3.00 ]
+[ 0.94, 0.35 ]
+</code></pre>
+<h2 id="vector_cross_to"><a class="header" href="#vector_cross_to">vector_cross_to</a></h2>
+<p>This is function that get the cross product between two vectors with 3 dimensions and stores the result in the <strong>dest</strong> vector.</p>
+<h3 id="arguments-38"><a class="header" href="#arguments-38">Arguments</a></h3>
+<p><strong>dest</strong> : left hand side and the destination of the cross product.</p>
+<p><strong>src</strong> : right hand side.</p>
+<h3 id="returns-36"><a class="header" href="#returns-36">Returns</a></h3>
+<p>The <strong>dest</strong> vector.</p>
+<h3 id="usage-example-38"><a class="header" href="#usage-example-38">Usage example</a></h3>
+<pre><code class="language-c">vector a = vector(8, 3, 2);
+vector b = vector(1, -4, 9);
+vector_cross_to(a, b);
+vector_printl(a);
+vector_printl(b);
+</code></pre>
+<pre><code class="language-bash">OUTPUT:
+
+[ 35.00, -70.00, -35.00 ]
+[ 1.00, -4.00, 9.00 ]
+</code></pre>
+<h2 id="vector_cross"><a class="header" href="#vector_cross">vector_cross</a></h2>
+<p>This is macro that get the cross product between two vectors with 3 dimensions and stores the result in a new vector.</p>
+<h3 id="arguments-39"><a class="header" href="#arguments-39">Arguments</a></h3>
+<p><strong>vec1</strong> : left hand side.</p>
+<p><strong>vec2</strong> : right hand side.</p>
+<h3 id="returns-37"><a class="header" href="#returns-37">Returns</a></h3>
+<p>A new vector with the cross product between <strong>vec1</strong> and <strong>vec2</strong>.</p>
+<h3 id="usage-example-39"><a class="header" href="#usage-example-39">Usage example</a></h3>
+<pre><code class="language-c">vector a = vector(8, 3, 2);
+vector b = vector(1, -4, 9);
+vector c = vector_cross(a, b);
+vector_printl(a);
+vector_printl(b);
+vector_printl(c);
+</code></pre>
+<pre><code class="language-bash">OUTPUT:
+
+[ 8.00, 3.00, 2.00 ]
+[ 1.00, -4.00, 9.00 ]
+[ 35.00, -70.00, -35.00 ]
+</code></pre>
+<h2 id="vector_compare_array"><a class="header" href="#vector_compare_array">vector_compare_array</a></h2>
+<p>This is function that compare if all vectors in a array are equal, this function continues to compare the vectors until find <em><strong>NULL</strong></em> on the array.</p>
+<h3 id="arguments-40"><a class="header" href="#arguments-40">Arguments</a></h3>
+<p><strong>vecs</strong> : array of vectors.</p>
+<h3 id="returns-38"><a class="header" href="#returns-38">Returns</a></h3>
+<p>If all the vectors in the array are equal returns 1, if the sizes or the elements are not equal then it returns 0.</p>
+<h3 id="usage-example-40"><a class="header" href="#usage-example-40">Usage example</a></h3>
+<pre><code class="language-c">any vecs[] = {
+	vector(8, 3, 2),
+	vector(8, 3, 2),
+	vector(8, 3),
+	NULL
+};
+printf(&quot;%s\n&quot;, vector_compare_array(vecs) ? &quot;equal&quot; : &quot;not equal&quot;);
+</code></pre>
+<pre><code class="language-bash">OUTPUT:
+
+not equal
+</code></pre>
+<h2 id="vector_compare"><a class="header" href="#vector_compare">vector_compare</a></h2>
+<p>This is wrapper macro for comparing vectors, it automatically creates an array and calls <a href="./vector_functions_macros.html#vector_compare_array">vector_compare_array</a>.</p>
+<h3 id="arguments-41"><a class="header" href="#arguments-41">Arguments</a></h3>
+<p>This macro is variadic, all the arguments must be vectors.</p>
+<h3 id="returns-39"><a class="header" href="#returns-39">Returns</a></h3>
+<p>If all the vectors passed are equal returns 1, if the sizes or the elements are not equal then it returns 0.</p>
+<h3 id="usage-example-41"><a class="header" href="#usage-example-41">Usage example</a></h3>
+<pre><code class="language-c">vector a = vector(8, 3, 2);
+vector b = vector(8, 3, 2);
+vector c = vector(8, 3);
+printf(&quot;%s\n&quot;, vector_compare(a, b) ? &quot;equal&quot; : &quot;not equal&quot;);
+printf(&quot;%s\n&quot;, vector_compare(a, b, c) ? &quot;equal&quot; : &quot;not equal&quot;);
+</code></pre>
+<pre><code class="language-bash">OUTPUT:
+
+equal
+not equal
+</code></pre>
+<h2 id="vector_orthogonal"><a class="header" href="#vector_orthogonal">vector_orthogonal</a></h2>
+<p>This functions check if two vectors are orthogonal.</p>
+<h3 id="arguments-42"><a class="header" href="#arguments-42">Arguments</a></h3>
+<p><strong>vec1</strong> vector to be checked.</p>
+<p><strong>vec2</strong> vector to be checked.</p>
+<h3 id="returns-40"><a class="header" href="#returns-40">Returns</a></h3>
+<p>If the vectors are orthogonal to each other returns 1, if not return 0.</p>
+<h3 id="usage-example-42"><a class="header" href="#usage-example-42">Usage example</a></h3>
+<pre><code class="language-c">vector a = vector(1, 0);
+vector b = vector(0, 1);
+printf(&quot;orthogonal : %s\n&quot;, vector_orthogonal(a, b) ? &quot;true&quot; : &quot;false&quot;);
+vector c = vector(0, 0);
+vector d = vector(1, 1);
+printf(&quot;orthogonal : %s\n&quot;, vector_orthogonal(c, d) ? &quot;true&quot; : &quot;false&quot;);
+</code></pre>
+<pre><code class="language-bash">OUTPUT:
+
+orthogonal : true
+orthogonal : true
+</code></pre>
+<h2 id="vector_perpendicular"><a class="header" href="#vector_perpendicular">vector_perpendicular</a></h2>
+<p>This functions check if two vectors are perpendicular.</p>
+<h3 id="arguments-43"><a class="header" href="#arguments-43">Arguments</a></h3>
+<p><strong>vec1</strong> vector to be checked.</p>
+<p><strong>vec2</strong> vector to be checked.</p>
+<h3 id="returns-41"><a class="header" href="#returns-41">Returns</a></h3>
+<p>If the vectors are perpedicular to each other returns 1, if not return 0.</p>
+<h3 id="usage-example-43"><a class="header" href="#usage-example-43">Usage example</a></h3>
+<pre><code class="language-c">vector a = vector(1, 0);
+vector b = vector(0, 1);
+printf(&quot;perpendicular : %s\n&quot;, vector_perpendicular(a, b) ? &quot;true&quot; : &quot;false&quot;);
+vector c = vector(0, 0);
+vector d = vector(1, 1);
+printf(&quot;perpendicular : %s\n&quot;, vector_perpendicular(c, d) ? &quot;true&quot; : &quot;false&quot;);
+</code></pre>
+<pre><code class="language-bash">OUTPUT:
+
+perpendicular : true
+perpendicular : false
+</code></pre>
+<h2 id="vector_angle"><a class="header" href="#vector_angle">vector_angle</a></h2>
+<p>Get the angle between two vectors.</p>
+<h3 id="arguments-44"><a class="header" href="#arguments-44">Arguments</a></h3>
+<p><strong>vec1</strong> vector to get the angle.</p>
+<p><strong>vec2</strong> vector to get the angle.</p>
+<h3 id="returns-42"><a class="header" href="#returns-42">Returns</a></h3>
+<p>Returns the angle between <strong>vec1</strong> and <strong>vec2</strong> in radians.</p>
+<h3 id="usage-example-44"><a class="header" href="#usage-example-44">Usage example</a></h3>
+<pre><code class="language-c">vector a = vector(1, 0);
+vector b = vector(0, 1);
+printf(&quot;%f\n&quot;, vector_angle(a, b));
+</code></pre>
+<pre><code class="language-bash">OUTPUT:
+
+1.570796
+</code></pre>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="vector_types.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="vector_types.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+            </nav>
+
+        </div>
+
+        <!-- Livereload script (if served using the cli tool) -->
+        <script>
+            const wsProtocol = location.protocol === 'https:' ? 'wss:' : 'ws:';
+            const wsAddress = wsProtocol + "//" + location.host + "/" + "__livereload";
+            const socket = new WebSocket(wsAddress);
+            socket.onmessage = function (event) {
+                if (event.data === "reload") {
+                    socket.close();
+                    location.reload();
+                }
+            };
+
+            window.onbeforeunload = function() {
+                socket.close();
+            }
+        </script>
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="elasticlunr.min.js"></script>
+        <script src="mark.min.js"></script>
+        <script src="searcher.js"></script>
+
+        <script src="clipboard.min.js"></script>
+        <script src="highlight.js"></script>
+        <script src="book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+    </body>
+</html>
