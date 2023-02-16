@@ -3,6 +3,7 @@
 
 typedef void *slac_any;
 typedef float slac_scalar;
+typedef unsigned int slacsz;
 typedef slac_scalar *const slac_vector;
 
 typedef union {
@@ -21,6 +22,10 @@ typedef union {
 	struct { slac_scalar s, t, p, q; };
 } *const slac_vector4;
 
+typedef slac_scalar (*const slac_matrix2)[2];
+typedef slac_scalar (*const slac_matrix3)[3];
+typedef slac_scalar (*const slac_matrix4)[4];
+
 #ifdef __USING_SLAC__
 #define any slac_any
 #define scalar slac_scalar
@@ -28,6 +33,9 @@ typedef union {
 #define vector2 slac_vector2
 #define vector3 slac_vector3
 #define vector4 slac_vector4
+#define matrix2 slac_matrix2
+#define matrix3 slac_matrix3
+#define matrix4 slac_matrix4
 #endif/*__USING_SLAC__*/
 
 #endif/*SLAC_TYPES_H_*/

@@ -1,18 +1,17 @@
-#include <stdio.h>
 #include <math.h>
 #include <assert.h>
 #define __USING_SLAC__
 #include "vector.h"
 
 #define binary_operation(left, operator, right)\
-for (unsigned int i = 0; i < vector_size(left); i++) {\
+for (slacsz i = 0; i < vector_size(left); i++) {\
 	if (vector_size(right) < i) break;\
 	((vector)(left))[i] operator ((vector)(right))[i];\
 }\
 return (left)\
 
 #define binary_operation_scalar(left, operator, right)\
-for (unsigned int i = 0; i < vector_size(left); i++) {\
+for (slacsz i = 0; i < vector_size(left); i++) {\
 	((vector)(left))[i] operator (right);\
 }\
 return (left)\
@@ -22,12 +21,11 @@ return (left)\
  * This is just to simulate a struct initialization
  * */
 any
-slac_setup_vector_memory(unsigned int size, any vec, unsigned int init_amount, scalar *init_values) {
-	*((unsigned int *)vec) = size;
-	vec += sizeof(unsigned int);
-	for (unsigned int i = 1; i <= size; i++) {
-		if(i < init_amount) ((vector)vec)[i - 1] = init_values[i];
-		else ((vector)vec)[i - 1] = 0;
+slac_setup_vector_memory(slacsz size, any vec, scalar *init_values) {
+	*((slacsz *)vec) = size;
+	vec += sizeof(slacsz);
+	for (slacsz i = 0; i < size; i++) {
+		((vector)vec)[i] = init_values ? init_values[i] : 0;
 	}
 	return vec;
 }
@@ -35,7 +33,7 @@ slac_setup_vector_memory(unsigned int size, any vec, unsigned int init_amount, s
 void 
 vector_print(slac_any vec) {
 	printf("[ ");
-	for (unsigned int i = 0; i < vector_size(vec); i++) {
+	for (slacsz i = 0; i < vector_size(vec); i++) {
 		if (i > 0) printf(", ");
 		printf("%.2f", ((vector)vec)[i]);
 	}
@@ -85,10 +83,18 @@ vector_div_scalar_to(any dest, scalar src) {
 	binary_operation_scalar(dest, *=, inv_src);
 }
 
+any
+vector_set_scalars(any dest, scalar src[], slacsz src_amount) {
+	for (slacsz i = 0; i < src_amount; i++) {
+		((vector)dest)[i] = src[i];
+	}
+	return dest;
+}
+
 scalar
 vector_dot(any vec1, any vec2) {
 	scalar dot = 0;
-	for (unsigned int i = 0; i < vector_size(vec1); i++) {
+	for (slacsz i = 0; i < vector_size(vec1); i++) {
 		scalar v1_times_v2 = ((vector)vec1)[i];
 		if (vector_size(vec2) > i) v1_times_v2 *= ((vector)vec2)[i];
 		dot += v1_times_v2;
@@ -99,7 +105,7 @@ vector_dot(any vec1, any vec2) {
 scalar
 vector_mag_squared(any vec) {
 	scalar mag = 0;
-	for (unsigned int i = 0; i < vector_size(vec); i++)
+	for (slacsz i = 0; i < vector_size(vec); i++)
 		mag += ((vector)vec)[i] * ((vector)vec)[i];
 	return mag;
 }
@@ -112,7 +118,7 @@ vector_mag(any vec) {
 scalar
 vector_dist_squared(any vec1, any vec2) {
 	scalar dist = 0;
-	for (unsigned int i = 0; i < vector_size(vec1); i++) {
+	for (slacsz i = 0; i < vector_size(vec1); i++) {
 		scalar v1_minus_v2 = ((vector)vec1)[i];
 		if (vector_size(vec2) > i) v1_minus_v2 -= ((vector)vec2)[i];
 		dist += v1_minus_v2 * v1_minus_v2;
@@ -149,9 +155,9 @@ vector_cross_to(any dest, any src) {
 _Bool
 vector_compare_array(any vecs[]) {
 	if (vecs[0] == NULL) return 0;
-	for (unsigned int i = 1; vecs[i]; i++) {
+	for (slacsz i = 1; vecs[i]; i++) {
 		if (vector_size(vecs[0]) != vector_size(vecs[i])) return 0;
-		for (unsigned int j = 0; j < vector_size(vecs[0]); j++)
+		for (slacsz j = 0; j < vector_size(vecs[0]); j++)
 			if (((vector)(vecs[0]))[j] != ((vector)(vecs[i]))[j]) return 0;
 	}
 	return 1;

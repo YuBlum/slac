@@ -1,7 +1,14 @@
 #ifndef SLAC_VECTOR_H_
 #define SLAC_VECTOR_H_
+#include <stdio.h>
 #include <alloca.h>
 #include <slac/types.h>
+#include <slac/utils.h>
+
+/*
+ * UPDATE DOCUMENTATION:
+ *		vector_set
+ * */
 
 #define __SLAC_WRAPPER_VECTOR_TO_VECTOR__(FUNC, dest, src) (_Generic((src),\
 	float: (FUNC##_scalar_to),\
@@ -32,9 +39,7 @@
 	default: (FUNC ## _vector_to)\
 ))(slac_vector_copy(vec1), vec2)
 
-#define SLAC_VANUM(...) (sizeof((slac_scalar []){ 0,##__VA_ARGS__ }) / sizeof(slac_scalar))
-
-slac_any slac_setup_vector_memory(unsigned int size, slac_any vec, unsigned int init_amount, slac_scalar *init_values);
+slac_any slac_setup_vector_memory(slacsz size, slac_any vec, slac_scalar *init_values);
 
 /* slac_vector is a 'constructor' for vectors
  * 1. 'arg1' is using a vague name because it can be used as the size or the 
@@ -47,21 +52,20 @@ slac_any slac_setup_vector_memory(unsigned int size, slac_any vec, unsigned int 
  * 		because than I can't make copies of a vector. 
 * */
 #define slac_vector(arg1 /* 1. */, ...) (\
-	SLAC_VANUM(__VA_ARGS__) > 1 ?\
+	SLAC_VANUM(__VA_ARGS__) > 0 ?\
 		slac_setup_vector_memory(\
-			SLAC_VANUM(__VA_ARGS__),\
-			alloca(sizeof(unsigned int) + sizeof(slac_scalar) * (SLAC_VANUM(__VA_ARGS__))),/* 2. */\
-			SLAC_VANUM((arg1), __VA_ARGS__),\
-			(slac_scalar []){ 0, (arg1), __VA_ARGS__ }\
+			SLAC_VANUM(__VA_ARGS__) + 1,\
+			alloca(sizeof(slacsz) + sizeof(slac_scalar) * (SLAC_VANUM(__VA_ARGS__) + 1)),/* 2. */\
+			(slac_scalar []){ (arg1), __VA_ARGS__ }\
 		) \
 	:\
 		slac_setup_vector_memory(\
 			(arg1),\
-			alloca(sizeof(unsigned int) + sizeof(slac_scalar) * (arg1)),/* 2. */\
-			0, NULL\
+			alloca(sizeof(slacsz) + sizeof(slac_scalar) * (arg1)),/* 2. */\
+			NULL\
 		)\
 )
-#define slac_vector_size(vec) *(((unsigned int *)(vec)) - 1)
+#define slac_vector_size(vec) *(((slacsz *)(vec)) - 1)
 
 void slac_vector_print(slac_any vec);
 #define slac_vector_printl(vec) do {\
@@ -81,6 +85,8 @@ slac_any slac_vector_sub_scalar_to(slac_any dest, slac_scalar src);
 slac_any slac_vector_mul_scalar_to(slac_any dest, slac_scalar src);
 slac_any slac_vector_div_scalar_to(slac_any dest, slac_scalar src);
 
+slac_any slac_vector_set_scalars(slac_any dest, slac_scalar src[], slacsz src_amount);
+
 #define slac_vector_copy(vec) slac_vector_set_vector(slac_vector(slac_vector_size(vec)), vec)
 
 #define slac_vector_add_vector(vec1, vec2) slac_vector_add_vector_to(slac_vector_copy(vec1), vec2)
@@ -93,7 +99,30 @@ slac_any slac_vector_div_scalar_to(slac_any dest, slac_scalar src);
 #define slac_vector_mul_scalar(vec, val) slac_vector_mul_scalar_to(slac_vector_copy(vec), val)
 #define slac_vector_div_scalar(vec, val) slac_vector_div_scalar_to( slac_vector_copy(vec), val)
 
-#define slac_vector_set(dest, src) (__SLAC_WRAPPER_VECTOR_TO_VECTOR__(slac_vector_set, src)(dest, dest, src))
+#define slac_vector_set(dest, src, ...) (\
+	SLAC_VANUM(__VA_ARGS__) > 1 ?\
+		slac_vector_set_scalars(\
+			dest,\
+			(slac_scalar[]){ src, __VA_ARGS__ },\
+			SLAC_VANUM(__VA_ARGS__)\
+		)\
+	:\
+		_Generic((src),\
+			float: (slac_vector_set_scalar),\
+			double: (slac_vector_set_scalar),\
+			long double: (slac_vector_set_scalar),\
+			char: (slac_vector_set_scalar),\
+			int: (slac_vector_set_scalar),\
+			long: (slac_vector_set_scalar),\
+			long long: (slac_vector_set_scalar),\
+			unsigned char: (slac_vector_set_scalar),\
+			unsigned int: (slac_vector_set_scalar),\
+			unsigned long: (slac_vector_set_scalar),\
+			unsigned long long: (slac_vector_set_scalar),\
+			default: (slac_vector_set_vector)\
+		)(dest, src)\
+)
+
 #define slac_vector_add_to(dest, src) (__SLAC_WRAPPER_VECTOR_TO_VECTOR__(slac_vector_add, dest, src))
 #define slac_vector_sub_to(dest, src) (__SLAC_WRAPPER_VECTOR_TO_VECTOR__(slac_vector_sub, dest, src))
 #define slac_vector_mul_to(dest, src) (__SLAC_WRAPPER_VECTOR_TO_VECTOR__(slac_vector_mul, dest, src))
@@ -140,6 +169,7 @@ slac_scalar slac_vector_angle(slac_any vec1, slac_any vec2);
 #define vector_sub_scalar_to slac_vector_sub_scalar_to
 #define vector_mul_scalar_to slac_vector_mul_scalar_to
 #define vector_div_scalar_to slac_vector_div_scalar_to
+#define vector_set_scalars slac_vector_set_scalars
 #define vector_copy slac_vector_copy
 #define vector_add_vector slac_vector_add_vector
 #define vector_sub_vector slac_vector_sub_vector
